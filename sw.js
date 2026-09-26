@@ -1,10 +1,10 @@
-const CACHE_NAME = 'stock-db-reader-mobile-v1';
+const CACHE_NAME = 'stock-db-reader-mobile-v2';
 const CORE = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192.svg',
-  './icon-512.svg'
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
