@@ -386,7 +386,7 @@ body.chart-mode .chart-layout{display:flex!important;flex:1!important;border:0;m
   .app-code{font-size:17px;margin-top:4px;letter-spacing:.4px;line-height:1.08}
   .app-price{font-size:22px;line-height:1.1}
   .app-delta{font-size:13px!important;margin-top:5px!important;line-height:1.1}
-  .app-sub{font-size:19px;margin-top:0;line-height:1.08}
+  .app-sub{font-size:16px;margin-top:0;line-height:1.08}
   .chart-workspace .favorite{font-size:25px;line-height:1;min-width:26px}
   .app-status{font-size:10px;min-height:24px;padding:5px calc(env(safe-area-inset-right) + var(--phone-x)) 5px calc(env(safe-area-inset-left) + var(--phone-x))}
 
@@ -415,7 +415,7 @@ body.chart-mode .chart-layout{display:flex!important;flex:1!important;border:0;m
 @media (max-width:360px){
   .app-row{grid-template-columns:minmax(88px,1.06fr) minmax(76px,.88fr) minmax(86px,.92fr) 24px;gap:4px}
   .app-row .stock-open>span:first-child{padding-left:6px}
-  .app-name{font-size:18px!important}.app-code{font-size:16px!important}.app-price{font-size:20px!important}.app-sub{font-size:18px!important}.app-delta{font-size:12px!important}
+  .app-name{font-size:18px!important}.app-code{font-size:16px!important}.app-price{font-size:20px!important}.app-sub{font-size:15px!important}.app-delta{font-size:12px!important}
   .rank-tabs{padding:0 3px}.chart-workspace .rank-tabs button{font-size:13px}
   .chart-title{font-size:16px}.chart-title small{font-size:13px}.chart-title-price{font-size:16px}
 }
@@ -1848,7 +1848,7 @@ new ResizeObserver(()=>drawChart()).observe($('canvasWrap'));
     const message=q.loading?'正在載入行情…':q.error||reason||(q.rank==='high5'&&mobile.highNote)||'';
     $('mobileStatus').textContent=state.file?(message||dateLabel(q.table)+' · '+rows.length+' 檔 · 歷史行情，非即時'):'本機 DB · 離線讀取 · 不上傳資料';
     if(!state.file){$('mobileList').innerHTML='<div class="app-empty"><strong>你的股票行情，隨手看</strong>開啟年度 DB，查看排行與歷史 K 線。<br>支援一次選取多個年度檔案。<br><button id="emptyOpen">選擇資料庫</button></div>';$('emptyOpen').onclick=()=>$('fileInput').click();return;}
-    $('mobileList').innerHTML=q.loading?'<div class="app-empty">正在載入行情…</div>':rows.length?rows.map(r=>'<article class="app-row"><button class="stock-open" data-open="'+esc(r.code)+'" aria-label="查看 '+esc(r.name)+' K 線"><span><span class="app-name">'+esc(r.name)+'</span><span class="app-code">'+esc(r.code)+'</span></span><span><span class="app-price '+classFor(r,'close')+'">'+fmt(r.close)+'</span><span class="app-delta '+tone(r.change)+'" style="display:block;margin-top:9px">'+signed(r.change)+' ('+fmt(r.pct)+'%)</span></span><span><span class="app-sub app-volume '+volumeWeightClass(r.volume)+'">總量 '+fmt(r.volume,0)+'</span></span></button><button class="favorite '+(q.favorites.has(r.code)?'saved':'')+'" data-fav="'+esc(r.code)+'" aria-label="'+(q.favorites.has(r.code)?'移除':'加入')+'自選 '+esc(r.name)+'" aria-pressed="'+q.favorites.has(r.code)+'">'+(q.favorites.has(r.code)?'★':'☆')+'</button></article>').join(''):'<div class="app-empty">'+esc(message||(isFav?'尚未加入自選股票。<☆> 點選星號即可收藏。':'這個日期沒有符合條件的股票。'))+'</div>';
+    $('mobileList').innerHTML=q.loading?'<div class="app-empty">正在載入行情…</div>':rows.length?rows.map(r=>'<article class="app-row"><button class="stock-open" data-open="'+esc(r.code)+'" aria-label="查看 '+esc(r.name)+' K 線"><span><span class="app-name">'+esc(r.name)+'</span><span class="app-code">'+esc(r.code)+'</span></span><span><span class="app-price '+classFor(r,'close')+'">'+fmt(r.close)+'</span><span class="app-delta '+tone(r.change)+'" style="display:block;margin-top:9px">'+signed(r.change)+' ('+fmt(r.pct)+'%)</span></span><span><span class="app-sub app-volume '+volumeWeightClass(r.volume)+'">量 '+fmt(r.volume,0)+'</span></span></button><button class="favorite '+(q.favorites.has(r.code)?'saved':'')+'" data-fav="'+esc(r.code)+'" aria-label="'+(q.favorites.has(r.code)?'移除':'加入')+'自選 '+esc(r.name)+'" aria-pressed="'+q.favorites.has(r.code)+'">'+(q.favorites.has(r.code)?'★':'☆')+'</button></article>').join(''):'<div class="app-empty">'+esc(message||(isFav?'尚未加入自選股票。<☆> 點選星號即可收藏。':'這個日期沒有符合條件的股票。'))+'</div>';
   };
   $('mobileList').onclick=async e=>{const f=e.target.closest('[data-fav]');if(f){const code=f.dataset.fav;q.favorites.has(code)?q.favorites.delete(code):q.favorites.add(code);try{localStorage.setItem('stock-reader-favorites',JSON.stringify([...q.favorites]));}catch{notify('無法儲存自選，下次開啟可能需重新加入。');}renderQuotes();return;}const b=e.target.closest('[data-open]');if(b){screen('chart',true);await loadStock(b.dataset.open);}};
   // Custom canvas renderer keeps chart gestures and OHLC in one synchronized view.
