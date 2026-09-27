@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stock-db-reader-mobile-v2';
+const CACHE_NAME = 'stock-db-reader-mobile-v3';
 const CORE = [
   './',
   './index.html',
